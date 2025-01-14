@@ -13,7 +13,7 @@ spec:
   destination:
     namespace: trio-app
     name: in-cluster
-  project: dev
+  project: default
   source:
     repoURL: https://github.com/lrochette/csdp_applications.git
     targetRevision: main
