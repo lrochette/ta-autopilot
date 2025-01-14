@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: trio-dev
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  labels:
+    app: trio
+  annotations:
+    argocd.argoproj.io/manifest-generate-paths: /helm/trio-app/dev
+spec:
+  destination:
+    namespace: trio-app
+    name: in-cluster
+  project: dev
+  source:
+    repoURL: https://github.com/lrochette/csdp_applications.git
+    targetRevision: main
+    path: ./helm/trio-app/dev/
+    helm:
+      parameters:
+        - name: buildID
+          value: argocd
+      valueFiles:
+        - values.yaml
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      prune: true
