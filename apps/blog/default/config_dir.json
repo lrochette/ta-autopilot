@@ -1,0 +1,13 @@
+{
+  "appName": "blog",
+  "userGivenName": "blog",
+  "destNamespace": "default",
+  "destServer": "https://kubernetes.default.svc",
+  "srcPath": "apps/blog",
+  "srcRepoURL": "https://github.com/lrochette/csdp_applications.git",
+  "srcTargetRevision": "",
+  "labels": null,
+  "annotations": null,
+  "exclude": "",
+  "include": ""
+}
