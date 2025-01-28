@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cmgen
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  annotations:
+    argocd.argoproj.io/manifest-generate-paths: /manifest/cmgen
+spec:
+  destination:
+    namespace: cmgen
+    name: in-cluster
+  project: default
+  source:
+    repoURL: https://github.com/lrochette/ta-autopilot.git
+    targetRevision: main
+    path: manifests/cmgen
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
