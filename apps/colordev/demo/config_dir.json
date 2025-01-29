@@ -1,0 +1,13 @@
+{
+  "appName": "colordev",
+  "userGivenName": "colordev",
+  "destNamespace": "default",
+  "destServer": "https://kubernetes.default.svc",
+  "srcPath": "manifests/colod/dev",
+  "srcRepoURL": "https://github.com/aperture-sci/DevOps.git",
+  "srcTargetRevision": "",
+  "labels": null,
+  "annotations": null,
+  "exclude": "",
+  "include": ""
+}
