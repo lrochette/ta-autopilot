@@ -1,0 +1,43 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: jenkins
+  namespace: argocd
+spec:
+  generators:
+    - list:
+        elements:
+          - cluster: demo-dev
+            short: dev
+          - cluster: demo-qa
+            short: qa
+
+
+  template:
+    metadata:
+      name: 'jenkins-{{short}}'
+      finalizers:
+        - resources-finalizer.argocd.argoproj.io/foreground
+      annotations:
+        argocd.argoproj.io/manifest-generate-paths: '.'
+
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/lrochette/ta-autopilot.git
+        targetRevision: main
+        path: 'manifests/jenkins/{{short}}'
+      destination:
+        name: 'in-cluster'
+        namespace: '{{short}}'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - PrunePropagationPolicy=foreground
+          - Replace=false
+          - PruneLast=false
+          - Validate=true
+          - CreateNamespace=true
+          - ApplyOutOfSyncOnly=false

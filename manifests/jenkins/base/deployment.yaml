@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jenkins
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jenkins
+  template:
+    metadata:
+      labels:
+        app: jenkins
+    spec:
+      containers:
+        - name: jenkins
+  #        image: bitnami/jenkins:2.249.2
+          image: bitnami/jenkins:2.414.2
+          env:
+            - name: JENKINS_OPTS
+              value: "--prefix=/jenkins --httpListenAddress=0.0.0.0"
+            - name: JENKINS_USERNAME
+              value: "codefresh"
+            - name: JENKINS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: jenkins
+                  key: jk-password
+          ports:
+            - name: http
+              containerPort: 8080
+            - containerPort: 50000
+              name: "jnlp"
+          # livenessProbe:
+          #   httpGet:
+          #     path: "/jenkins/login"
+          #     port: 8080
+          #   initialDelaySeconds: 90
+          #   periodSeconds: 10
+          #   timeoutSeconds: 5
+          #   failureThreshold: 5
+          # readinessProbe:
+          #   httpGet:
+          #     path: "/jenkins/login"
+          #     port: 8080
+          #   initialDelaySeconds: 60
+          #   periodSeconds: 10
+          #   timeoutSeconds: 5
+          #   failureThreshold: 3
