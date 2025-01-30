@@ -22,6 +22,10 @@ configMapGenerator:
       - kube-controller-manager
       jsonPointers:
       - /spec/replicas
+- behavior: merge
+  name: argocd-cmd-params-cm
+  literals:
+    - server.insecure=true
 resources:
 - github.com/argoproj-labs/argocd-autopilot/manifests/base?ref=v0.4.18
 - argocd-ingress.yaml
