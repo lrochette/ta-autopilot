@@ -3,7 +3,7 @@
   "userGivenName": "colordev",
   "destNamespace": "default",
   "destServer": "https://kubernetes.default.svc",
-  "srcPath": "manifests/colod/dev",
+  "srcPath": "manifests/color/dev",
   "srcRepoURL": "https://github.com/aperture-sci/DevOps.git",
   "srcTargetRevision": "",
   "labels": null,
