@@ -3,16 +3,10 @@ kind: Ingress
 metadata:
   name: argocd-server
   namespace: argocd
-  labels:
-    app.kubernetes.io/name: argocd-server
-    app.kubernetes.io/instance: argocd
-    app.kubernetes.io/component: server
-    app.kubernetes.io/part-of: argocd
-    app.kubernetes.io/version: "v2.13.0"
+  labels: {}
   annotations:
-    kubernetes.io/tls-acme: "false"
-    meta.helm.sh/release-name: "argocd"
-    meta.helm.sh/release-namespace: "argocd"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
 spec:
   ingressClassName: nginx-public
   rules:
