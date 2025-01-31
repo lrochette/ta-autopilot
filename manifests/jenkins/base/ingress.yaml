@@ -3,11 +3,10 @@ kind: Ingress
 metadata:
   name: jenkins
   annotations:
-    kubernetes.io/ingress.class: nginx-public
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
     nginx.ingress.kubernetes.io/add-base-url: "true"
 spec:
-  ingressClassName: nginx
+  ingressClassName: nginx-public
   rules:
     - host: jenkins-ta.cs.sandbox.codefresh.io
       http:
