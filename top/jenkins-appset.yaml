@@ -26,7 +26,7 @@ spec:
       source:
         repoURL: https://github.com/lrochette/ta-autopilot.git
         targetRevision: main
-        path: 'manifests/jenkins/{{short}}'
+        path: 'manifests/jenkins/overlays/{{short}}'
       destination:
         name: 'in-cluster'
         namespace: '{{short}}'

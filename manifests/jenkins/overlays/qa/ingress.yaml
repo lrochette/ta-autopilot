@@ -8,7 +8,7 @@ metadata:
 spec:
   ingressClassName: nginx-public
   rules:
-    - host: jenkins-ta.cs.sandbox.codefresh.io
+    - host: jenkins-qa-ta.cs.sandbox.codefresh.io
       http:
         paths:
           - path: /jenkins
