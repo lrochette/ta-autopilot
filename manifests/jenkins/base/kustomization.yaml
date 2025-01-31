@@ -4,3 +4,4 @@ resources:
   - deployment.yaml
   - jenkins-secret.yaml
   - ingress.yaml
+nameSuffix: -base
