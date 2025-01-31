@@ -4,3 +4,5 @@ bases:
   - ../base
 nameSuffix: -dev
 namespace: dev
+resources:
+  - service.yaml

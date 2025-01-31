@@ -3,5 +3,4 @@ kind: Kustomization
 resources:
   - deployment.yaml
   - jenkins-secret.yaml
-  - service.yaml
   - ingress.yaml
