@@ -34,9 +34,9 @@ spec:
         name: 'in-cluster'
         namespace: '{{short}}'
       syncPolicy:
-        # automated:
-        #   prune: true
-        #   selfHeal: true
+        automated:
+          prune: true
+          selfHeal: true
         syncOptions:
           - PrunePropagationPolicy=foreground
           - Replace=false
