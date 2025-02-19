@@ -6,3 +6,4 @@ nameSuffix: -qa
 namespace: qa
 resources:
   - ingress.yaml
+  - service.yaml
