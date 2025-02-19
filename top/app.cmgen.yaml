@@ -8,6 +8,8 @@ metadata:
   annotations:
     argocd.argoproj.io/manifest-generate-paths: /manifest/cmgen
     argocd.argoproj.io/sync-wave: "10"
+  labels:
+    app-type: "user"
 spec:
   destination:
     namespace: cmgen

@@ -12,7 +12,6 @@ spec:
           - cluster: demo-qa
             short: qa
 
-
   template:
     metadata:
       name: 'jenkins-{{short}}'
@@ -21,6 +20,8 @@ spec:
       annotations:
         argocd.argoproj.io/manifest-generate-paths: '.'
         argocd.argoproj.io/sync-wave: "40"
+      labels:
+        app-type: "user"
 
     spec:
       project: default
