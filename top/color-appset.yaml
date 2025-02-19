@@ -20,6 +20,7 @@ spec:
         - resources-finalizer.argocd.argoproj.io/foreground
       annotations:
         argocd.argoproj.io/manifest-generate-paths: '.'
+        argocd.argoproj.io/sync-wave: "30"
 
     spec:
       project: default

@@ -9,6 +9,7 @@ metadata:
     app: trio
   annotations:
     argocd.argoproj.io/manifest-generate-paths: /helm/trio-app/dev
+    argocd.argoproj.io/sync-wave: "20"
 spec:
   destination:
     namespace: trio-app
