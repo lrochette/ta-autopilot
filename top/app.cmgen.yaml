@@ -9,6 +9,7 @@ metadata:
     argocd.argoproj.io/manifest-generate-paths: /manifest/cmgen
     argocd.argoproj.io/sync-wave: "0"
     argocd.argoproj.io/hook: PreSync
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
   labels:
     app-type: "user"
 spec:
