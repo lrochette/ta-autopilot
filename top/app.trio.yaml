@@ -10,7 +10,6 @@ metadata:
   annotations:
     argocd.argoproj.io/manifest-generate-paths: /helm/trio-app/dev
     argocd.argoproj.io/sync-wave: "20"
-    argocd.argoproj.io/hook: Sync
   labels:
     app-type: "user"
 spec:
