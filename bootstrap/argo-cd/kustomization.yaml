@@ -17,7 +17,7 @@ configMapGenerator:
   - admin.enabled="true"
   - url=https://argocd-ta.cs.sandbox.codefresh.io
   - |
-    resource.customizations.health.argoproj.io_Application= |
+    resource.customizations.health.argoproj.io_Application=
     hs = {}
     hs.status = "Progressing"
     hs.message = ""
