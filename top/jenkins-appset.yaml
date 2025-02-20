@@ -19,7 +19,8 @@ spec:
         - resources-finalizer.argocd.argoproj.io/foreground
       annotations:
         argocd.argoproj.io/manifest-generate-paths: '.'
-        argocd.argoproj.io/sync-wave: "40"
+        argocd.argoproj.io/sync-wave: "0"
+        argocd.argoproj.io/hook: PostSync
       labels:
         app-type: "user"
 
