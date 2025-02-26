@@ -12,7 +12,7 @@ metadata:
     app-type: "user"
 spec:
   destination:
-    namespace: cmgen
+    namespace: trio
     name: in-cluster
   project: default
   source:
