@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  annotations:
+  labels:
+    app.kubernetes.io/instance: default-top
+  name: argo-rollouts
+  namespace: default
+spec:
+  destination:
+    name: in-cluster
+    namespace: argo-rollouts
+  project: default
+  source:
+    chart: argo-rollouts
+    helm:
+      releaseName: argo-rollouts
+    repoURL: https://codefresh-io.github.io/argo-helm
+    targetRevision: 2.37.3-1-v1.7.1-CR-24605
+  syncPolicy:
+    automated:
+      allowEmpty: true
+      prune: true
+      selfHeal: true
