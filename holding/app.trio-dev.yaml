@@ -1,23 +1,32 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: trio
+  name: trio-dev
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io/foreground
+  labels:
+    app: trio
   annotations:
-    argocd.argoproj.io/manifest-generate-paths: /manifest/trio
+    argocd.argoproj.io/manifest-generate-paths: /helm/trio-app/dev
+    argocd.argoproj.io/sync-wave: "20"
   labels:
     app-type: "user"
 spec:
   destination:
-    namespace: trio
+    namespace: trio-app
     name: in-cluster
   project: default
   source:
-    repoURL: https://github.com/lrochette/ta-autopilot.git
+    repoURL: https://github.com/lrochette/csdp_applications.git
     targetRevision: main
-    path: manifests/trio
+    path: ./helm/trio-app/dev/
+    helm:
+      parameters:
+        - name: buildID
+          value: argocd
+      valueFiles:
+        - values.yaml
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
