@@ -15,8 +15,8 @@ spec:
     chart: argo-rollouts
     helm:
       releaseName: argo-rollouts
-    repoURL: https://codefresh-io.github.io/argo-helm
-    targetRevision: 2.37.3-1-v1.7.1-CR-24605
+    repoURL: https://argoproj.github.io/argo-helm
+    targetRevision: 2.39.0
   syncPolicy:
     automated:
       allowEmpty: true
