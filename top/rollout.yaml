@@ -5,7 +5,7 @@ metadata:
   labels:
     app.kubernetes.io/instance: default-top
   name: argo-rollouts
-  namespace: default
+  namespace: argocd
 spec:
   destination:
     name: in-cluster
