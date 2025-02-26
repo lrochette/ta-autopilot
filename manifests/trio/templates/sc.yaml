@@ -2,5 +2,7 @@ apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
   name: ebs
+  annotations:
+    argocd.argoproj.io/sync-hook: "PreSync"  
 provisioner: ebs.csi.aws.com
 volumeBindingMode: WaitForFirstConsumer
