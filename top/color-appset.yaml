@@ -12,7 +12,6 @@ spec:
           - cluster: demo-qa
             short: qa
 
-
   template:
     metadata:
       name: 'color-{{short}}'
@@ -24,7 +23,6 @@ spec:
         notifications.argoproj.io/subscribe.on-sync-succeeded.slack: "topic-codefresh-demo"
       labels:
         app-type: "user"
-
     spec:
       project: default
       source:
