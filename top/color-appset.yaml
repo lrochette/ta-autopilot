@@ -20,7 +20,7 @@ spec:
       annotations:
         argocd.argoproj.io/manifest-generate-paths: '.'
         argocd.argoproj.io/sync-wave: "30"
-        notifications.argoproj.io/subscribe.on-sync-succeeded.slack: "laurent.rochette@octopus.com"
+        notifications.argoproj.io/subscribe.on-sync-succeeded.slack: "D06N9E96MMX"
       labels:
         app-type: "user"
     spec:
