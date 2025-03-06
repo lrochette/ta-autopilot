@@ -15,6 +15,7 @@ configMapGenerator:
         key: git_username
         name: autopilot-secret
   - admin.enabled="true"
+  - accounts.admin="apiKey,login"
   - url=https://argocd-ta.cs.sandbox.codefresh.io
   - |
     resource.customizations.health.argoproj.io_Application=
