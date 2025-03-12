@@ -1,0 +1,9 @@
+apiVersion: v2
+appVersion: 8.5.0
+description: Codefresh gitops runtime umbrella chart
+name: velero
+version: 8.5.0
+dependencies:
+  - name: vmware-tanzu/velero
+    repository: https://vmware-tanzu.github.io/helm-charts
+    version: 8.5.0

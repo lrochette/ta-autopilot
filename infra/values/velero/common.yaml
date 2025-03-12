@@ -1,0 +1,121 @@
+nodeSelector:
+  node: infra
+  
+image:
+  repository: velero/velero
+  tag: v1.15.2
+  pullPolicy: IfNotPresent
+
+configuration:
+  features: EnableCSI
+  uploaderType: kopia
+  backupStorageLocation:
+  - name: velero-backup-storage-location
+    #bucket: {{ .Values.velero_backups_bucket }}
+    bucket: gts-argocd-ci-velero-dev
+    default: true
+    provider: aws
+    config:
+      region: us-east-1
+  volumeSnapshotLocation:
+  - name: velero-volume-storage-location
+    provider: aws
+    config:
+      region: us-east-1
+  repositoryMaintenanceJob:
+    requests:
+      cpu: 1000m
+      memory: 1024Mi
+    limits:
+      memory: 2048Mi
+    
+
+initContainers:
+- name: velero-plugin-for-aws
+  image: velero/velero-plugin-for-aws:v1.11.1
+  volumeMounts:
+  - mountPath: /target
+    name: plugins
+
+credentials:
+  useSecret: false
+
+resources:
+  requests:
+    cpu: 500m
+    memory: 128Mi
+  limits:
+    cpu: 1000m
+    memory: 512Mi
+
+deployNodeAgent: true
+
+nodeAgent:
+  podVolumePath: /var/lib/kubelet/pods
+
+  resources:
+    requests:
+      cpu: 500m
+      memory: 512Mi
+    limits:
+      cpu: 1000m
+      memory: 1024Mi
+      
+# metrics:
+#   enabled: true
+#   scrapeInterval: 30s
+#   scrapeTimeout: 10s
+
+#   # Pod annotations for Prometheus
+#   podAnnotations:
+#     prometheus.io/scrape: "true"
+#     prometheus.io/port: "8085"
+#     prometheus.io/path: "/metrics"
+
+#   serviceMonitor:
+#     autodetect: false
+#     enabled: true
+#     annotations: 
+#       "helm.sh/hook": post-install,post-upgrade
+#     #namespace: {{ .Values.kube_prometheus_stack_namespace }}
+#     namespace: monitoring
+#     additionalLabels:
+#       #release: {{ .Values.kube_prometheus_stack_release }}
+#       release: kube-prometheus-stack
+
+#   nodeAgentPodMonitor:
+#     autodetect: false
+#     enabled: true
+#     annotations: 
+#       "helm.sh/hook": post-install,post-upgrade
+#     #namespace: {{ .Values.kube_prometheus_stack_namespace }}
+#     namespace: monitoring
+#     additionalLabels:
+#       #release: {{ .Values.kube_prometheus_stack_release }}
+#       release: kube-prometheus-stack
+
+#   prometheusRule:
+#     autodetect: false
+#     enabled: true
+#     # Additional labels to add to deployed PrometheusRule
+#     additionalLabels: {}
+#     # PrometheusRule namespace. Defaults to Velero namespace.
+#     #namespace: monitoring
+#     # Rules to be deployed
+#     spec:
+#     - alert: VeleroBackupPartialFailures
+#       annotations:
+#         message: Velero backup {{ $labels.schedule }} has {{ $value | humanizePercentage }} partialy failed backups.
+#       expr: |-
+#         velero_backup_partial_failure_total{schedule!=""} / velero_backup_attempt_total{schedule!=""} > 0.25
+#       for: 15m
+#       labels:
+#         severity: warning
+#     - alert: VeleroBackupFailures
+#       annotations:
+#         message: Velero backup {{ $labels.schedule }} has {{ $value | humanizePercentage }} failed backups.
+#       expr: |-
+#         velero_backup_failure_total{schedule!=""} / velero_backup_attempt_total{schedule!=""} > 0.25
+#       for: 15m
+#       labels:
+#         severity: warning

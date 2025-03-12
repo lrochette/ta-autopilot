@@ -1,0 +1,30 @@
+# EFS only supports filesystem backup
+schedules:
+  gts-cicd-prd-schedule-fsb:
+    disabled: false
+    schedule: " 15 2 * * 1-5"
+    useOwnerReferencesInBackup: false
+    template:
+      ttl: "720h"
+      excludedNamespaces:
+      - velero
+      - default
+      defaultVolumesToFsBackup: true
+      includedNamespaces:
+      - "*"
+      includedResources:
+      - "*"
+      snapshotVolumes: false
+  
+  # gts-cicd-prd-schedule-vs:
+  #   disabled: false
+  #   schedule: " 15 1 * * 1-5"
+  #   template:
+  #     ttl: "720h"
+  #     excludedNamespaces:
+  #     - velero
+  #     includedNamespaces:
+  #     - "*"
+  #     includedResources:
+  #     - "*"
+  #     snapshotMoveData: true
