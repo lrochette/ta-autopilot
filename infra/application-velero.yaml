@@ -1,0 +1,54 @@
+{{- if .Values.velero.enabled }}
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  namespace: argocd
+  name: {{ .Values.velero.name }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+    {{- with .Values.annotations }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
+  labels:
+    app.aegon.io/argocd-app: {{ .Values.appName }}-{{ .Values.environment }}
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: {{ .Values.velero.destinationNamespace }}
+    server: {{ .Values.kubernetesClusterEndpoint }}
+  project: {{ .Values.project }}
+  sources:
+  - repoURL: {{ .Values.velero.chartRepository }}
+    chart: {{ .Values.velero.chartName }}
+    targetRevision: {{ .Values.velero.chartVersion }}
+    helm:
+      parameters:
+      - name: fullnameOverride
+        value: {{ .Values.velero.name }}
+      valueFiles:
+      - $values/infra/values/velero/common.yaml
+      #- $values/infra/values/velero/{{ .Values.environment }}.yaml
+      valuesObject:
+        serviceAccount:
+          create: true
+          name: {{ .Values.velero.chartName }}
+          annotations:
+            eks.amazonaws.com/role-arn: arn:aws:iam::{{ .Values.awsAccountId }}:role/{{ .Values.velero.saRoleName }}
+  - repoURL: {{ .Values.valuesRepository }}
+    targetRevision: HEAD
+    ref: values
+  syncPolicy:
+    retry:
+      limit: 5 # number of failed sync attempt retries; unlimited number of attempts if less than 0
+      backoff:
+        duration: 5s # the amount to back off. Default unit is seconds, but could also be a duration (e.g. "2m", "1h")
+        factor: 2 # a factor to multiply the base duration after each failed retry
+        maxDuration: 3m # the maximum amount of time allowed for the backoff strategy
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+{{- end }}
