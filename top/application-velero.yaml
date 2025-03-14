@@ -13,7 +13,7 @@ metadata:
 spec:
   destination:
     namespace: velero
-    server: in-cluster
+    name: in-cluster
   project: default
   sources:
   - repoURL: https://vmware-tanzu.github.io/helm-charts
