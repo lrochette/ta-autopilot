@@ -1,0 +1,47 @@
+
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  namespace: argocd
+  name: velero
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+    avp.kubernetes.io/ignore: "true"
+  labels: {}
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: velero
+    server: in-cluster
+  project: default
+  sources:
+  - repoURL: https://vmware-tanzu.github.io/helm-charts
+    chart: velero
+    targetRevision: 8.5.0
+    helm:
+      parameters:
+      valueFiles:
+      - $values/infra/values/velero/common.yaml
+      - $values/infra/values/velero/dev.yaml
+      valuesObject:
+        serviceAccount:
+          create: true
+          name: velero
+          annotations:
+            eks.amazonaws.com/role-arn: arn:aws:iam::024848449686:role/lrta-external-secrets-operator-irsa
+  - repoURL: https://github.com/lrochette/ta-autopilot.git
+    targetRevision: HEAD
+    ref: values
+  syncPolicy:
+    # retry:
+    #   limit: 5 # number of failed sync attempt retries; unlimited number of attempts if less than 0
+    #   backoff:
+    #     duration: 5s # the amount to back off. Default unit is seconds, but could also be a duration (e.g. "2m", "1h")
+    #     factor: 2 # a factor to multiply the base duration after each failed retry
+    #     maxDuration: 3m # the maximum amount of time allowed for the backoff strategy
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
