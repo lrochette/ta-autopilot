@@ -1,17 +1,17 @@
 # EFS only supports filesystem backup
 schedules:
-  gts-cicd-dev-schedule-fsb:
+  lr-ta:
     disabled: false
     schedule: "15 2 * * 1-5"
     template:
       csiSnapshotTimeout: 0s
       defaultVolumesToFsBackup: true
       ttl: "720h"
-      excludedNamespaces:
-      - velero
-      - default
+      # excludedNamespaces:
+      # - velero
+      # - default
       includedNamespaces:
-      - "*"
+      - dev
       includedResources:
       - "*"
     useOwnerReferencesInBackup: false
