@@ -1,6 +1,6 @@
-nodeSelector:
-  node: infra
-  
+# nodeSelector:
+#   node: infra
+
 image:
   repository: velero/velero
   tag: v1.15.2
@@ -11,8 +11,7 @@ configuration:
   uploaderType: kopia
   backupStorageLocation:
   - name: velero-backup-storage-location
-    #bucket: {{ .Values.velero_backups_bucket }}
-    bucket: gts-argocd-ci-velero-dev
+    bucket: lr-ta-velero
     default: true
     provider: aws
     config:
@@ -28,7 +27,7 @@ configuration:
       memory: 1024Mi
     limits:
       memory: 2048Mi
-    
+
 
 initContainers:
 - name: velero-plugin-for-aws
@@ -60,7 +59,7 @@ nodeAgent:
     limits:
       cpu: 1000m
       memory: 1024Mi
-      
+
 # metrics:
 #   enabled: true
 #   scrapeInterval: 30s
@@ -75,7 +74,7 @@ nodeAgent:
 #   serviceMonitor:
 #     autodetect: false
 #     enabled: true
-#     annotations: 
+#     annotations:
 #       "helm.sh/hook": post-install,post-upgrade
 #     #namespace: {{ .Values.kube_prometheus_stack_namespace }}
 #     namespace: monitoring
@@ -86,7 +85,7 @@ nodeAgent:
 #   nodeAgentPodMonitor:
 #     autodetect: false
 #     enabled: true
-#     annotations: 
+#     annotations:
 #       "helm.sh/hook": post-install,post-upgrade
 #     #namespace: {{ .Values.kube_prometheus_stack_namespace }}
 #     namespace: monitoring
